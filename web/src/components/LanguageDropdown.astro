@@ -1,0 +1,124 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { locales } from "../i18n/ui";
+
+interface Props {
+  variant?: "dropdown" | "inline";
+  class?: string;
+}
+
+const { class: className, variant = "dropdown" } = Astro.props;
+const base = import.meta.env.BASE_URL === "/" ? "" : import.meta.env.BASE_URL;
+let pathWithoutBase = Astro.url.pathname.startsWith(base)
+  ? Astro.url.pathname.slice(base.length)
+  : Astro.url.pathname;
+if (pathWithoutBase.startsWith("/")) pathWithoutBase = pathWithoutBase.slice(1);
+const currentPath = pathWithoutBase.replace(
+  new RegExp(`^${Astro.currentLocale}/?`),
+  "",
+);
+---
+
+{
+  variant === "inline" ? (
+    <div class:list={["text-brand-primary", className]}>
+      {locales.map((locale, index) => (
+        <>
+          {Astro.currentLocale === locale.code ? (
+            <span class="font-bold">{locale.code.toUpperCase()}</span>
+          ) : (
+            <a href={getRelativeLocaleUrl(locale.code, currentPath)}>
+              {locale.code.toUpperCase()}
+            </a>
+          )}
+          {index < locales.length - 1 && <span>|</span>}
+        </>
+      ))}
+    </div>
+  ) : (
+    <div class:list={["text-brand-primary", "lang-dropdown", className]}>
+      <button
+        class="p-3 uppercase rounded-sm cursor-pointer flex items-center gap-2"
+        aria-label="Select Language"
+      >
+        {Astro.currentLocale}
+        <span class="arrow-down" />
+      </button>
+      <ul class="lang-menu font-body-sm shadow-md bg-brand-tertiary rounded-sm list-none">
+        {locales
+          .filter((locale) => locale.code !== Astro.currentLocale)
+          .map((locale) => (
+            <li>
+              <a href={getRelativeLocaleUrl(locale.code, currentPath)}>
+                {locale.label}
+              </a>
+            </li>
+          ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--color-brand-primary);
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  .lang-menu {
+    position: absolute;
+    top: 100%;
+    left: -60px;
+    padding: 0;
+    min-width: 150px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s;
+    z-index: 100;
+  }
+
+  .lang-menu li a {
+    display: block;
+    padding: 10px;
+    color: var(--color-brand-primary-on-surface);
+    text-decoration: none;
+    border-bottom: 1px solid;
+    border-color: color-mix(
+      in oklab,
+      var(--color-brand-primary) 20%,
+      transparent
+    );
+  }
+
+  .lang-menu li a:hover {
+    color: var(--color-brand-primary);
+    border-bottom: 1px solid var(--color-brand-primary);
+  }
+
+  .lang-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .lang-dropdown:hover .lang-menu,
+  .lang-dropdown:focus-within .lang-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lang-dropdown:hover .arrow-down,
+  .lang-dropdown:focus-within .arrow-down {
+    transform: rotate(180deg);
+  }
+</style>

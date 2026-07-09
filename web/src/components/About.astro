@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import aboutImage from "../assets/images/about-side.jpg";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 import { useTranslations } from "../i18n/ui";
 import type { Locale } from "../i18n/ui";
@@ -38,7 +39,7 @@ const t = useTranslations(locale);
         <div class="mt-12 flex justify-end gap-6">
           <a
             class="inline-flex px-6 py-3 border border-brand-primary font-label-sm uppercase tracking-widest hover:bg-brand-primary hover:text-[#F1EDE4] transition-all"
-            href="#"
+            href={getRelativeLocaleUrl(Astro.currentLocale ?? "en", "about")}
           >
             <span>{t("about.cta")}</span>
           </a>

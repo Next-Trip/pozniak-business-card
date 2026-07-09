@@ -1,15 +1,24 @@
 ---
 import { Icon } from "astro-icon/components";
+import LanguageDropdown from "./LanguageDropdown.astro";
 
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 import { useTranslations } from "../i18n/ui";
+import type { UiKey } from "../i18n/ui";
+
 const t = useTranslations(Astro.currentLocale);
 
-const base = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
-let pathWithoutBase = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) : Astro.url.pathname;
-if (pathWithoutBase.startsWith('/')) pathWithoutBase = pathWithoutBase.slice(1);
-const currentPath = pathWithoutBase.replace(new RegExp(`^${Astro.currentLocale}/?`), "");
+const navItems: { labelKey: UiKey; href: string }[] = [
+  {
+    labelKey: "site.nav_about",
+    href: getRelativeLocaleUrl(Astro.currentLocale ?? "en", "about"),
+  },
+  { labelKey: "site.nav_events", href: "#events" },
+  { labelKey: "site.nav_press", href: "#press" },
+  { labelKey: "site.nav_gallery", href: "#gallery" },
+  { labelKey: "site.nav_contacts", href: "#footer" },
+];
 ---
 
 <div
@@ -25,22 +34,24 @@ const currentPath = pathWithoutBase.replace(new RegExp(`^${Astro.currentLocale}/
     </button>
   </div>
   <nav class="flex flex-col space-y-8 mt-12">
-    <a
-      class="font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4"
-      href={`${base}/about`}
-      >{t("site.nav_about")}
-    </a>
-    <a
-      class="font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4"
-      href="#events"
-      >{t("site.nav_events")}
-    </a>
-    <a
-      class="font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4"
-      href="#press"
-      >{t("site.nav_press")}
-    </a>
+    {
+      navItems.map((item) => (
+        <a
+          class="font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4"
+          href={item.href}
+        >
+          {t(item.labelKey)}
+        </a>
+      ))
+    }
   </nav>
+
+  <div class="pt-8">
+    <LanguageDropdown
+      class="flex gap-2 items-center font-body-lg uppercase"
+      variant="inline"
+    />
+  </div>
 </div>
 
 <header
@@ -58,52 +69,25 @@ const currentPath = pathWithoutBase.replace(new RegExp(`^${Astro.currentLocale}/
 
     <a
       class="font-headline-md uppercase tracking-tighter"
-      href={base || '/'}
+      href={getRelativeLocaleUrl(Astro.currentLocale ?? "en", "")}
       >{t("site.hero_name")}
     </a>
 
     <nav class="hidden md:flex space-x-8">
-      <a
-        class="text-body-md uppercase tracking-widest text-brand-primary-on-surface hover:text-brand-primary transition-colors duration-300"
-        href={`${base}/about`}
-        >{t("site.nav_about")}
-      </a>
-      <a
-        class="text-body-md uppercase tracking-widest text-brand-primary-on-surface hover:text-brand-primary transition-colors duration-300"
-        href="#events"
-        >{t("site.nav_events")}
-      </a>
-      <a
-        class="text-body-md uppercase tracking-widest text-brand-primary-on-surface hover:text-brand-primary transition-colors duration-300"
-        href="#press"
-        >{t("site.nav_press")}
-      </a>
+      {
+        navItems.map((item) => (
+          <a
+            class="text-body-md uppercase tracking-widest text-brand-primary-on-surface hover:text-brand-primary transition-colors duration-300"
+            href={item.href}
+          >
+            {t(item.labelKey)}
+          </a>
+        ))
+      }
     </nav>
 
-    <div
-      class="hidden md:flex space-x-2 text-brand-primary font-label-sm"
-      id="lang-switcher"
-    >
-      <a
-        class="hover:opacity-100 opacity-70 transition-opacity cursor-pointer"
-        data-lang="en"
-        href=`${getRelativeLocaleUrl("en", currentPath)}`
-        >EN
-      </a>
-      <span class="opacity-30">|</span>
-      <a
-        class="hover:opacity-100 opacity-70 transition-opacity cursor-pointer"
-        data-lang="cs"
-        href=`${getRelativeLocaleUrl("cs", currentPath)}`
-        >CS
-      </a>
-      <span class="opacity-30">|</span>
-      <a
-        class="hover:opacity-100 opacity-70 transition-opacity cursor-pointer"
-        data-lang="uk"
-        href=`${getRelativeLocaleUrl("uk", currentPath)}`
-        >UK
-      </a>
+    <div class="hidden md:flex space-x-2">
+      <LanguageDropdown />
     </div>
   </div>
 </header>

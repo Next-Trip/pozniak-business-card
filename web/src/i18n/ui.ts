@@ -1,5 +1,9 @@
-export const locales = ["en", "uk", "cs"] as const;
-export type Locale = (typeof locales)[number];
+export const locales = [
+  { code: "en", label: "English (EN)" },
+  { code: "uk", label: "Українська (UK)" },
+  { code: "cs", label: "Čeština (CS)" },
+] as const;
+export type Locale = (typeof locales)[number]["code"];
 export const defaultLocale: Locale = "en";
 
 const ui = {
@@ -9,6 +13,8 @@ const ui = {
     "site.nav_about": "Bio",
     "site.nav_events": "Events",
     "site.nav_press": "Press",
+    "site.nav_gallery": "Gallery",
+    "site.nav_contacts": "Contacts",
 
     "site.page_title.index": "Home",
     "site.page_title.about": "Bio",
@@ -45,12 +51,14 @@ const ui = {
     "site.nav_about": "Біо",
     "site.nav_events": "Події",
     "site.nav_press": "Преса",
+    "site.nav_gallery": "Галерея",
+    "site.nav_contacts": "Контакти",
 
     "site.page_title.index": "Головна",
     "site.page_title.about": "Біографія",
 
     // Hero
-    "hero.title": "Вокалістка та виконавиця",
+    "hero.title": "Співачка та акторка",
 
     // About
     "about.title": "Голос Душі",
@@ -81,12 +89,14 @@ const ui = {
     "site.nav_about": "Bio",
     "site.nav_events": "Události",
     "site.nav_press": "Tisk",
+    "site.nav_gallery": "Galerie",
+    "site.nav_contacts": "Kontakty",
 
     "site.page_title.index": "Domů",
     "site.page_title.about": "Životopis",
 
     // Hero
-    "hero.title": "Vokální umělec a performer",
+    "hero.title": "Zpěvačka a performerka",
 
     // About
     "about.title": "Hlas duše",
@@ -124,7 +134,7 @@ export type UiKey = keyof (typeof ui)["en"];
 
 export function useTranslations(locale: string | undefined) {
   const validLocale =
-    locale && locales.includes(locale as Locale)
+    locale && locales.some((l) => l.code === locale)
       ? (locale as Locale)
       : defaultLocale;
 
