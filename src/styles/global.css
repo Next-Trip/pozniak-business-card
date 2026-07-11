@@ -8,6 +8,9 @@
   --color-brand-tertiary: #f1ede4;
   --color-brand-neutral: #1a1917;
   --color-surface-tint: #f1eae0;
+  --text-body: var(--color-brand-primary);
+
+  --header-height: 80px;
 
   --font-sans: var(--font-inter);
   --font-eb-garamond: var(--font-eb-garamond);
@@ -15,6 +18,7 @@
 
 .prose {
   --tw-prose-body: var(--color-brand-primary);
+  --tw-prose-bold: var(--color-brand-primary);
 }
 
 .font-body-lg {

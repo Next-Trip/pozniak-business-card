@@ -40,6 +40,8 @@ export default defineConfig({
           "close",
           "arrow-forward",
           "format-quote-close",
+          "chevron-left",
+          "chevron-right",
         ],
       },
     }),

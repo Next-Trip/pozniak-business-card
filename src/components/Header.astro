@@ -22,17 +22,9 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 ---
 
 <div
-  class="fixed inset-0 bg-brand-tertiary/95 z-60 hidden flex-col p-6 transition-opacity duration-300"
+  class="mt-(--header-height) fixed inset-0 bg-brand-tertiary/95 z-60 hidden flex-col p-6 transition-opacity duration-300"
   id="mobile-nav-overlay"
 >
-  <div class="flex justify-between items-center mb-12">
-    <h2 class="font-headline-md text-brand-primary uppercase tracking-tighter">
-      {t("site.hero_name")}
-    </h2>
-    <button class="text-brand-primary cursor-pointer" id="close-menu-btn">
-      <Icon name="mdi:close" width="32" height="32" />
-    </button>
-  </div>
   <nav class="flex flex-col space-y-8 mt-12">
     {
       navItems.map((item) => (
@@ -55,7 +47,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 </div>
 
 <header
-  class="fixed top-0 w-full z-50 backdrop-blur-md bg-brand-tertiary/80 text-brand-primary"
+  class="fixed h-(--header-height) top-0 w-full z-50 backdrop-blur-md bg-brand-tertiary/80 text-brand-primary"
 >
   <div
     class="flex justify-between items-center px-6 md:pl-16 md:pr-6 py-2 h-20 max-w-7xl mx-auto"
@@ -67,10 +59,23 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     </a>
 
     <button
-      class="md:hidden text-brand-primary cursor-pointer transition-opacity active:opacity-70"
+      class="md:hidden text-brand-primary cursor-pointer transition-all active:opacity-70"
       id="open-menu-btn"
+      aria-expanded="false"
+      aria-label="Toggle menu"
     >
-      <Icon name="mdi:menu" width="32" height="32" />
+      <Icon
+        name="mdi:menu"
+        width="32"
+        height="32"
+        class="menu-icon-open transition-all duration-200"
+      />
+      <Icon
+        name="mdi:close"
+        width="32"
+        height="32"
+        class="menu-icon-close transition-all duration-200 hidden"
+      />
     </button>
 
     <nav class="hidden md:flex space-x-8">
@@ -108,7 +113,13 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 
     function toggleMenu() {
       const isExpanded = button?.getAttribute("aria-expanded") === "true";
-      button?.setAttribute("aria-expanded", (!isExpanded).toString());
+      const nextExpanded = !isExpanded;
+      button?.setAttribute("aria-expanded", nextExpanded.toString());
+
+      const iconOpen = button?.querySelector(".menu-icon-open");
+      const iconClose = button?.querySelector(".menu-icon-close");
+      iconOpen?.classList.toggle("hidden", nextExpanded);
+      iconClose?.classList.toggle("hidden", !nextExpanded);
 
       menu?.classList.toggle("hidden");
       menu?.classList.toggle("flex");
@@ -116,6 +127,12 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 
     function closeMenu() {
       button?.setAttribute("aria-expanded", "false");
+
+      const iconOpen = button?.querySelector(".menu-icon-open");
+      const iconClose = button?.querySelector(".menu-icon-close");
+      iconOpen?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+
       menu?.classList.add("hidden");
       menu?.classList.remove("flex");
     }

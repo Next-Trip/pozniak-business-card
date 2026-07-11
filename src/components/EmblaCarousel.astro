@@ -1,0 +1,305 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  showDots?: boolean;
+  showArrows?: boolean;
+}
+
+const { showDots = false, showArrows = false } = Astro.props;
+---
+
+<div class="embla">
+  <div class="embla__viewport">
+    <div class="embla__container">
+      <slot />
+    </div>
+
+    {
+      (showArrows || showDots) && (
+        <div class="embla__controls">
+          {showArrows && (
+            <button
+              class="embla__button embla__button--prev embla__button--disabled hover:-translate-x-2 transition-transform"
+              type="button"
+            >
+              <Icon name="mdi:chevron-left" width="56" height="56" />
+            </button>
+          )}
+          {showDots && <div class="embla__dots" />}
+          {showArrows && (
+            <button
+              class="embla__button embla__button--next embla__button--disabled hover:translate-x-2 transition-transform"
+              type="button"
+            >
+              <Icon name="mdi:chevron-right" width="56" height="56" />
+            </button>
+          )}
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style is:global>
+  .embla {
+    max-width: 48rem;
+    margin: auto;
+
+    --slide-height: 26rem;
+    --slide-spacing: 1rem;
+    --slide-size: 100%;
+  }
+
+  .embla__viewport {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
+    /* height: 600px; */
+    max-height: 100vh;
+  }
+
+  .embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+  }
+
+  .embla__controls {
+    display: flex;
+    grid-template-columns: auto 1fr;
+    justify-content: space-around;
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .embla__dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+  }
+
+  .embla__dot {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .embla__dot:before,
+  .embla__dot:after {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    content: "";
+  }
+
+  .embla__dot:before {
+    border: 0.1rem solid var(--color-brand-primary);
+  }
+
+  .embla__dot:after {
+    background-color: var(--color-brand-primary);
+    opacity: 0;
+  }
+
+  .embla__dot--selected:after {
+    opacity: 1;
+  }
+
+  .embla__slide__img {
+    transform: translate3d(0, 0, 0);
+    width: 100%;
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+    height: var(--slide-height);
+    max-height: 100vh;
+    object-fit: contain;
+  }
+
+  .embla__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  .embla__button {
+    -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    touch-action: manipulation;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border: 0.2rem solid var(--detail-medium-contrast);
+    width: 3.6rem;
+    height: 3.6rem;
+
+    z-index: 1;
+    border-radius: 50%;
+    color: var(--text-body);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(0deg);
+  }
+
+  .embla__button--disabled {
+    color: var(--detail-high-contrast);
+  }
+</style>
+
+<script>
+  import "@justinribeiro/lite-youtube";
+  import EmblaCarousel from "embla-carousel";
+  import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
+
+  function addDotButtonAndClickHandlers(
+    emblaApi: EmblaCarouselType,
+    dotsNode: HTMLElement,
+  ): void {
+    let dotNodes: HTMLElement[] = [];
+
+    const addDotBtnsWithClickHandlers = (): void => {
+      dotsNode.innerHTML = emblaApi
+        .scrollSnapList()
+        .map(() => '<button class="embla__dot" type="button"></button>')
+        .join("");
+
+      const scrollTo = (index: number): void => {
+        emblaApi.scrollTo(index);
+      };
+
+      dotNodes = Array.from(dotsNode.querySelectorAll(".embla__dot"));
+      dotNodes.forEach((dotNode, index) => {
+        dotNode.addEventListener("click", () => scrollTo(index), false);
+      });
+    };
+
+    const toggleDotButtonsActive = (): void => {
+      const previous = emblaApi.previousScrollSnap();
+      const selected = emblaApi.selectedScrollSnap();
+      if (dotNodes[previous])
+        dotNodes[previous].classList.remove("embla__dot--selected");
+      if (dotNodes[selected])
+        dotNodes[selected].classList.add("embla__dot--selected");
+    };
+
+    addDotBtnsWithClickHandlers();
+    toggleDotButtonsActive();
+
+    emblaApi
+      .on("reInit", addDotBtnsWithClickHandlers)
+      .on("reInit", toggleDotButtonsActive)
+      .on("select", toggleDotButtonsActive);
+  }
+
+  function addTogglePrevNextButtonsActive(
+    emblaApi: EmblaCarouselType,
+    prevBtn: HTMLElement,
+    nextBtn: HTMLElement,
+  ): void {
+    const togglePrevNextButtonsState = (): void => {
+      if (emblaApi.canScrollPrev()) {
+        prevBtn.classList.remove("embla__button--disabled");
+      } else {
+        prevBtn.classList.add("embla__button--disabled");
+      }
+
+      if (emblaApi.canScrollNext()) {
+        nextBtn.classList.remove("embla__button--disabled");
+      } else {
+        nextBtn.classList.add("embla__button--disabled");
+      }
+    };
+
+    togglePrevNextButtonsState();
+
+    emblaApi
+      .on("select", togglePrevNextButtonsState)
+      .on("reInit", togglePrevNextButtonsState);
+  }
+
+  function addPrevNextButtonClickHandlers(
+    emblaApi: EmblaCarouselType,
+    prevBtn: HTMLElement | null,
+    nextBtn: HTMLElement | null,
+  ): void {
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => emblaApi.scrollPrev(), false);
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => emblaApi.scrollNext(), false);
+    }
+
+    if (prevBtn && nextBtn) {
+      addTogglePrevNextButtonsActive(emblaApi, prevBtn, nextBtn);
+    }
+  }
+
+  function initCarousels() {
+    const OPTIONS: EmblaOptionsType = { loop: true };
+    const emblaNodes = document.querySelectorAll(".embla");
+
+    emblaNodes.forEach((emblaNode) => {
+      const viewportNode = emblaNode.querySelector(
+        ".embla__viewport",
+      ) as HTMLElement;
+
+      if (!viewportNode) return;
+
+      const dotsNode = emblaNode.querySelector(".embla__dots") as HTMLElement;
+      const prevBtn = emblaNode.querySelector(
+        ".embla__button--prev",
+      ) as HTMLElement | null;
+      const nextBtn = emblaNode.querySelector(
+        ".embla__button--next",
+      ) as HTMLElement | null;
+
+      const emblaApi = EmblaCarousel(viewportNode, OPTIONS);
+
+      if (dotsNode) {
+        addDotButtonAndClickHandlers(emblaApi, dotsNode);
+      }
+
+      if (prevBtn && nextBtn) {
+        addPrevNextButtonClickHandlers(emblaApi, prevBtn, nextBtn);
+      }
+    });
+  }
+
+  // Initialize on initial load
+  initCarousels();
+  // Initialize on ViewTransitions page load if applicable
+  document.addEventListener("astro:page-load", initCarousels);
+</script>
