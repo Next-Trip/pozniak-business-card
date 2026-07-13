@@ -139,3 +139,14 @@ collections:
                   widget: "string",
                   required: false,
                 }
+      - file: "/src/data/videos.json"
+        label: "Videos"
+        name: "videos"
+        fields:
+          - label: "List of Videos"
+            name: "video_list"
+            widget: "list"
+            summary: "{{fields.url}}"
+            fields:
+              - { label: "Youtube video URL", name: "url", widget: "string" }
+              - { label: "Video title", name: "title", widget: "string" }

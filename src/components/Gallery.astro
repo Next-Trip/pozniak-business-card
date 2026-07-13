@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import EmblaCarousel from "./EmblaCarousel.astro";
 
 import galleryData from "../data/gallery.json";
+import videos from "../data/videos.json";
 
 import { useTranslations } from "../i18n/ui";
 const t = useTranslations(Astro.currentLocale);
@@ -11,11 +12,6 @@ const t = useTranslations(Astro.currentLocale);
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/*.{jpeg,jpg,png,gif}",
 );
-
-const videos = [
-  "https://youtu.be/iNV6qxNMBRo?si=s4bdIJ_qBlCZXuTs",
-  "https://youtu.be/dpGln87XeUI?si=uBji4iXXDwTGZa6v",
-];
 
 function youTubeGetID(url: string) {
   const [a, , b] = url
@@ -72,12 +68,14 @@ function youTubeGetID(url: string) {
     </h2>
     <EmblaCarousel showDots={true} showArrows={true}>
       {
-        videos.map((video) => {
-          const videoId = youTubeGetID(video);
+        videos.video_list.map((video) => {
+          const videoId = youTubeGetID(video.url);
           return (
             <div class="embla__slide">
               {videoId ? (
                 <lite-youtube
+                  autopause={true}
+                  videotitle={video.title}
                   videoid={videoId}
                   posterquality="maxresdefault"
                   posterloading="lazy"

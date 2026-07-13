@@ -9,15 +9,29 @@ import type { UiKey } from "../i18n/ui";
 
 const t = useTranslations(Astro.currentLocale);
 
+const localeBase = getRelativeLocaleUrl(Astro.currentLocale ?? "en", "");
+
 const navItems: { labelKey: UiKey; href: string }[] = [
   {
     labelKey: "site.nav_about",
     href: getRelativeLocaleUrl(Astro.currentLocale ?? "en", "about"),
   },
-  { labelKey: "site.nav_events", href: "#events" },
-  { labelKey: "site.nav_press", href: "#press" },
-  { labelKey: "site.nav_gallery", href: "#gallery" },
-  { labelKey: "site.nav_contacts", href: "#footer" },
+  {
+    labelKey: "site.nav_events",
+    href: `${localeBase}#events`,
+  },
+  {
+    labelKey: "site.nav_press",
+    href: `${localeBase}#press`,
+  },
+  {
+    labelKey: "site.nav_gallery",
+    href: `${localeBase}#gallery`,
+  },
+  {
+    labelKey: "site.nav_contacts",
+    href: `${localeBase}#footer`,
+  },
 ];
 ---
 
@@ -96,6 +110,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     </div>
   </div>
 </header>
+<div style="height: var(--header-height);"></div>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
