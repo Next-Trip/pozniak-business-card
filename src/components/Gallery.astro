@@ -29,11 +29,9 @@ function youTubeGetID(url: string) {
 
 <section class="py-16 px-6 md:px-16 fade-in-section" id="gallery">
   <div class="max-w-7xl mx-auto">
-    <h2
-      class="font-headline-lg-mobile md:font-headline-lg text-brand-primary mb-12 text-center"
-    >
+    <h1 class="text-brand-primary mb-12 text-center">
       {t("gallery.title")}
-    </h2>
+    </h1>
 
     <EmblaCarousel showArrows={true}>
       {
@@ -61,11 +59,7 @@ function youTubeGetID(url: string) {
 
 <section class="py-16 px-6 md:px-16 bg-[#f7f3ef] fade-in-section" id="gallery">
   <div class="max-w-7xl mx-auto">
-    <h2
-      class="font-headline-lg-mobile md:font-headline-lg text-brand-primary mb-12 text-center"
-    >
-      Videos
-    </h2>
+    <h1 class="text-brand-primary mb-12 text-center">Videos</h1>
     <EmblaCarousel showDots={true} showArrows={true}>
       {
         videos.video_list.map((video) => {
@@ -77,7 +71,7 @@ function youTubeGetID(url: string) {
                   autopause={true}
                   videotitle={video.title}
                   videoid={videoId}
-                  posterquality="maxresdefault"
+                  posterquality="sddefault"
                   posterloading="lazy"
                 />
               ) : null}

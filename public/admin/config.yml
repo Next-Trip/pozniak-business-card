@@ -68,6 +68,17 @@ collections:
               widget: "richtext",
               i18n: true,
             }
+      - name: "press"
+        label: "Press Quote"
+        file: "/src/data/press.json"
+        i18n: true
+        fields:
+          - {
+              label: "Press Quote",
+              name: "press_quote",
+              widget: "richtext",
+              i18n: true,
+            }
       - name: "bio"
         label: "Bio Content"
         file: "/src/data/bio.json"

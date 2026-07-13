@@ -1,29 +1,42 @@
 ---
 import { Icon } from "astro-icon/components";
+import { marked } from "marked";
+
+import pressData from "../data/press.json";
+const press =
+  pressData[(Astro.currentLocale ?? "en") as keyof typeof pressData];
 ---
 
 <section class="py-32 px-6 md:px-16 fade-in-section" id="press">
-  <div class="max-w-4xl mx-auto text-center">
-    <div class="flex justify-center">
-      <Icon
-        name="mdi:format-quote-close"
-        class="text-brand-primary"
-        width="64"
-        height="64"
-      />
-    </div>
-    <div class="max-w-3xl mx-auto">
-      <p
-        class="font-headline-md text-brand-primary italic mb-8 leading-relaxed"
-      >
-        "A masterful display of vocal control and profound emotional depth. Voss
-        does not just sing notes; she breathes life into the very silence
-        between them."
-      </p>
-      <div
-        class="font-label-sm text-brand-primary-on-surface uppercase tracking-widest"
-      >
-        — The Classical Review
+  <div class="mx-auto grid justify-center text-center text-brand-primary">
+    <article
+      class="prose font-body-md text-brand-primary-on-surface"
+      set:html={marked.parse(press.press_quote)}
+    />
+    <div
+      class="flex flex-col items-center md:flex-row justify-center mt-12 gap-4 md:gap-8 w-full"
+    >
+      <div class="flex">
+        <Icon name="mdi:radio" width="24" height="24" />
+        <a
+          class="ml-2"
+          href="https://www.mujrozhlas.cz/nocni-mikroforum/host-veronika-pozniak-hudebnice-herecka"
+          >Listen to the radio interview</a
+        >
+      </div>
+      <div class="flex">
+        <Icon name="mdi:newspaper-variant-outline" width="24" height="24" />
+        <a
+          class="ml-2"
+          href="https://porohy.cz/veronika-poznyak-spiv-shho-yednaye-narodi-i-zczilyuye-serczya/"
+          >Read the article</a
+        >
+      </div>
+      <div class="flex">
+        <Icon name="mdi:download" width="24" height="24" />
+        <a class="ml-2" href="src/assets/images/md_3-1704474865.pdf"
+          >Download the article</a
+        >
       </div>
     </div>
   </div>
