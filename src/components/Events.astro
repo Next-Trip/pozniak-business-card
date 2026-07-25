@@ -4,8 +4,12 @@ import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 
+import { useTranslations, defaultLocale } from "../i18n/ui";
+const currentLocale = Astro.currentLocale ?? defaultLocale;
+const t = useTranslations(currentLocale);
+
 const allEvents = await getCollection("events", ({ id }: any) => {
-  return id.startsWith(Astro.currentLocale);
+  return id.startsWith(currentLocale + "/") || id.startsWith(currentLocale);
 });
 
 const sortedEvents = [...allEvents].sort((a, b) => {
@@ -14,9 +18,6 @@ const sortedEvents = [...allEvents].sort((a, b) => {
 
   return posA - posB;
 });
-
-import { useTranslations } from "../i18n/ui";
-const t = useTranslations(Astro.currentLocale);
 ---
 
 <section class="py-32 px-6 md:px-16 bg-[#f7f3ef] fade-in-section" id="events">

@@ -9,11 +9,27 @@ import Layout from "@layouts/Layout.astro";
 import Gallery from "@components/Gallery.astro";
 import Workshops from "@components/Workshops.astro";
 
-import { useTranslations } from "@i18n/ui";
-const t = useTranslations(Astro.currentLocale);
-
+import { useTranslations, locales, defaultLocale } from "@i18n/ui";
 import { getImage } from "astro:assets";
 import backgroundImage from "@assets/bg.svg";
+
+export function getStaticPaths() {
+  return locales.flatMap((l) => {
+    if (l.code === defaultLocale) {
+      return [
+        { params: { locale: undefined } },
+        { params: { locale: l.code } },
+      ];
+    }
+    return [
+      { params: { locale: l.code } },
+    ];
+  });
+}
+
+const currentLocale = Astro.params.locale || Astro.currentLocale || defaultLocale;
+const t = useTranslations(currentLocale);
+
 const optimizedBackground = await getImage({ src: backgroundImage });
 ---
 

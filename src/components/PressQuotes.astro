@@ -2,9 +2,13 @@
 import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
+import { useTranslations, defaultLocale } from "../i18n/ui";
+
+const currentLocale = Astro.currentLocale ?? defaultLocale;
+const t = useTranslations(currentLocale);
 
 const pressCollection = await getCollection("press", ({ id }: any) => {
-  return id.startsWith(Astro.currentLocale);
+  return id.startsWith(currentLocale + "/") || id.startsWith(currentLocale);
 });
 
 const sortedPress = [...pressCollection].sort((a, b) => {
@@ -15,9 +19,7 @@ const sortedPress = [...pressCollection].sort((a, b) => {
 });
 
 import EmblaCarousel from "./EmblaCarousel.astro";
-
-import { useTranslations } from "../i18n/ui";
-const t = useTranslations(Astro.currentLocale);
+const pdfPath = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/md_3-1704474865.pdf`;
 ---
 
 <section class="py-32 px-6 md:px-16 fade-in-section" id="press">
@@ -70,7 +72,7 @@ const t = useTranslations(Astro.currentLocale);
         <Icon name="mdi:download" width="24" height="24" />
         <a
           class="ml-2"
-          href={`${import.meta.env.BASE_URL === "/" ? "" : import.meta.env.BASE_URL}/md_3-1704474865.pdf`}
+          href={pdfPath}
           target="_blank"
           rel="noopener noreferrer">{t("press.download_article")}</a
         >

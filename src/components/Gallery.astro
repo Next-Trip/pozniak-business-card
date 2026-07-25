@@ -46,7 +46,7 @@ function youTubeGetID(url: string) {
               <Image
                 layout="constrained"
                 src={images[imagePath]()}
-                alt="Cover image."
+                alt={photo.alt || photo.caption || t("gallery.title")}
                 class="embla__slide__img"
               />
             </div>

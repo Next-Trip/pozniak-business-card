@@ -1,0 +1,33 @@
+---
+import Header from "@components/Header.astro";
+import Layout from "@layouts/Layout.astro";
+import Bio from "@components/about/Bio.astro";
+import Footer from "@components/Footer.astro";
+
+import { useTranslations, locales, defaultLocale } from "@i18n/ui";
+
+export function getStaticPaths() {
+  return locales.flatMap((l) => {
+    if (l.code === defaultLocale) {
+      return [
+        { params: { locale: undefined } },
+        { params: { locale: l.code } },
+      ];
+    }
+    return [
+      { params: { locale: l.code } },
+    ];
+  });
+}
+
+const currentLocale = Astro.params.locale || Astro.currentLocale || defaultLocale;
+const t = useTranslations(currentLocale);
+
+var title = t("site.hero_name") + " - " + t("site.page_title.about");
+---
+
+<Layout title={title}>
+  <Header />
+  <Bio />
+  <Footer />
+</Layout>

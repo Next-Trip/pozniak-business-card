@@ -1,12 +1,13 @@
 ---
-import { useTranslations } from "../i18n/ui";
-const t = useTranslations(Astro.currentLocale);
+import { useTranslations, defaultLocale } from "../i18n/ui";
+const currentLocale = Astro.currentLocale ?? defaultLocale;
+const t = useTranslations(currentLocale);
 
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 
 const allWorkshops = await getCollection("workshops", ({ id }: any) => {
-  return id.startsWith(Astro.currentLocale);
+  return id.startsWith(currentLocale + "/") || id.startsWith(currentLocale);
 });
 
 const sortedWorkshops = [...allWorkshops].sort((a, b) => {
@@ -56,7 +57,7 @@ const sortedWorkshops = [...allWorkshops].sort((a, b) => {
       </p>
       <a
         class="inline-flex items-center justify-center px-8 py-4 bg-brand-primary text-[#F1EDE4] font-label-sm uppercase tracking-widest hover:bg-surface-tint hover:text-brand-primary hover:border-brand-primary transition-colors"
-        href="#"
+        href="#footer"
       >
         {t("workshops.individual.request")}
       </a>
