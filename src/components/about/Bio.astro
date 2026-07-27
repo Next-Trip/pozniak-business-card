@@ -1,15 +1,15 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import Breadcrumb from "../../components/Breadcrumb.astro";
-import { useTranslations } from "../../i18n/ui";
+import Breadcrumb from "@components/Breadcrumb.astro";
+import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 
-import bioData from "../../data/bio.json";
+import bioData from "@data/bio.json";
 const content = bioData[(Astro.currentLocale ?? "en") as keyof typeof bioData];
 
 import { getImage } from "astro:assets";
 
-import backgroundImage from "../../assets/bg.svg";
+import backgroundImage from "@assets/bg.svg";
 const optimizedBackground = await getImage({ src: backgroundImage });
 
 import { marked } from "marked";

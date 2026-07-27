@@ -1,36 +1,78 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { locales, defaultLocale } from "@i18n/ui";
 
-const { title } = Astro.props;
-const locale = Astro.currentLocale;
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const currentLocale = Astro.currentLocale ?? defaultLocale;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const localePattern = locales.map((l) => l.code).join("|");
+const relativePath = Astro.url.pathname
+  .replace(new RegExp(`^${baseUrl}/?(${localePattern})?`), "")
+  .replace(/^\//, "");
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={currentLocale}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="icon"
       type="image/svg+xml"
-      href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.svg`}
+      href={`${baseUrl}/favicon.svg`}
     />
     <link
       rel="icon"
-      href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.ico`}
+      href={`${baseUrl}/favicon.ico`}
       sizes="any"
     />
     <link
       rel="apple-touch-icon"
-      href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/apple-touch-icon.png`}
+      href={`${baseUrl}/apple-touch-icon.png`}
     />
 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    <!-- Canonical & i18n alternate links -->
+    <link rel="canonical" href={canonicalURL} />
+    {locales.map((l) => (
+      <link
+        rel="alternate"
+        hreflang={l.code}
+        href={getAbsoluteLocaleUrl(l.code, relativePath)}
+      />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={getAbsoluteLocaleUrl(defaultLocale, relativePath)}
+    />
+
+    <!-- Open Graph & Social Media Tags -->
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
 
     <Font cssVariable="--font-eb-garamond" preload />
     <Font cssVariable="--font-inter" preload />
+    <ClientRouter />
   </head>
   <body>
     <slot />
@@ -48,7 +90,7 @@ const locale = Astro.currentLocale;
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function setupObservers() {
     const observerOptions = {
       root: null,
       rootMargin: "0px",
@@ -67,5 +109,8 @@ const locale = Astro.currentLocale;
     document.querySelectorAll(".fade-in-section").forEach((section) => {
       observer.observe(section);
     });
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupObservers);
+  document.addEventListener("astro:page-load", setupObservers);
 </script>

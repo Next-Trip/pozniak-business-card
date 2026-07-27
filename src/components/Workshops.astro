@@ -1,5 +1,5 @@
 ---
-import { useTranslations, defaultLocale } from "../i18n/ui";
+import { useTranslations, defaultLocale } from "@i18n/ui";
 const currentLocale = Astro.currentLocale ?? defaultLocale;
 const t = useTranslations(currentLocale);
 
@@ -23,14 +23,14 @@ const sortedWorkshops = [...allWorkshops].sort((a, b) => {
   id="masterclasses"
 >
   <div class="max-w-7xl mx-auto">
-    <h1 class="text-brand-primary mb-16 text-center">{t("workshops.title")}</h1>
+    <h2 class="text-brand-primary mb-16 text-center">{t("workshops.title")}</h2>
     {
       sortedWorkshops.map((workshop: any) => (
         <div class="max-w-4xl mx-auto flex flex-col space-y-12">
           <div class="group border-b border-brand-primary/20 pb-8 flex flex-col md:flex-row justify-between items-start gap-8 hover:border-brand-primary transition-colors">
             <div>
-              <h2 class="mb-2">{workshop.data.title}</h2>
-              <div class="font-label-sm text-[#716E11] uppercase tracking-widest mb-2">
+              <h3 class="mb-2">{workshop.data.title}</h3>
+              <div class="font-label-sm text-brand-secondary uppercase tracking-widest mb-2">
                 {workshop.data.start_date.toLocaleDateString()} -{" "}
                 {workshop.data.end_date.toLocaleDateString()}
               </div>

@@ -9,6 +9,10 @@ import icon from "astro-icon";
 export default defineConfig({
   site: "https://Next-Trip.github.io",
   base: "/pozniak-business-card",
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

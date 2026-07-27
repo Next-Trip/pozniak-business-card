@@ -1,11 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
-import LanguageDropdown from "./LanguageDropdown.astro";
+import LanguageDropdown from "@components/LanguageDropdown.astro";
 
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-import { useTranslations } from "../i18n/ui";
-import type { UiKey } from "../i18n/ui";
+import { useTranslations } from "@i18n/ui";
+import type { UiKey } from "@i18n/ui";
 
 const t = useTranslations(Astro.currentLocale);
 
@@ -113,7 +113,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 <div style="height: var(--header-height);"></div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function setupMobileMenu() {
     const button = document.getElementById("open-menu-btn");
     const closebutton = document.getElementById("close-menu-btn");
     const menu = document.getElementById("mobile-nav-overlay");
@@ -151,5 +151,8 @@ const navItems: { labelKey: UiKey; href: string }[] = [
       menu?.classList.add("hidden");
       menu?.classList.remove("flex");
     }
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupMobileMenu);
+  document.addEventListener("astro:page-load", setupMobileMenu);
 </script>

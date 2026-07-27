@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
-import { useTranslations, defaultLocale } from "../i18n/ui";
+import { useTranslations, defaultLocale } from "@i18n/ui";
 
 const currentLocale = Astro.currentLocale ?? defaultLocale;
 const t = useTranslations(currentLocale);
@@ -18,7 +18,7 @@ const sortedPress = [...pressCollection].sort((a, b) => {
   return posA - posB;
 });
 
-import EmblaCarousel from "./EmblaCarousel.astro";
+import EmblaCarousel from "@components/EmblaCarousel.astro";
 const pdfPath = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/md_3-1704474865.pdf`;
 ---
 

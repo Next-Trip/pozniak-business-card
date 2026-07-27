@@ -1,12 +1,12 @@
 ---
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
-import EmblaCarousel from "./EmblaCarousel.astro";
+import EmblaCarousel from "@components/EmblaCarousel.astro";
 
-import galleryData from "../data/gallery.json";
-import videos from "../data/videos.json";
+import galleryData from "@data/gallery.json";
+import videos from "@data/videos.json";
 
-import { useTranslations } from "../i18n/ui";
+import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -29,9 +29,9 @@ function youTubeGetID(url: string) {
 
 <section class="py-16 px-6 md:px-16 fade-in-section" id="gallery">
   <div class="max-w-7xl mx-auto">
-    <h1 class="text-brand-primary mb-12 text-center">
+    <h2 class="text-brand-primary mb-12 text-center">
       {t("gallery.title")}
-    </h1>
+    </h2>
 
     <EmblaCarousel showArrows={true} loop={true}>
       {
@@ -47,6 +47,9 @@ function youTubeGetID(url: string) {
                 layout="constrained"
                 src={images[imagePath]()}
                 alt={photo.alt || photo.caption || t("gallery.title")}
+                format="webp"
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 768px) 100vw, 80vw"
                 class="embla__slide__img"
               />
             </div>
@@ -59,7 +62,7 @@ function youTubeGetID(url: string) {
 
 <section class="py-16 px-6 md:px-16 bg-[#f7f3ef] fade-in-section">
   <div class="max-w-7xl mx-auto">
-    <h1 class="text-brand-primary mb-12 text-center">{t("video.title")}</h1>
+    <h2 class="text-brand-primary mb-12 text-center">{t("video.title")}</h2>
     <EmblaCarousel showDots={true} showArrows={true} loop={true}>
       {
         videos.video_list.map((video) => {

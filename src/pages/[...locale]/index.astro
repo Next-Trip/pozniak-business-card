@@ -30,10 +30,14 @@ export function getStaticPaths() {
 const currentLocale = Astro.params.locale || Astro.currentLocale || defaultLocale;
 const t = useTranslations(currentLocale);
 
+import homepageData from "@data/homepage.json";
+const homeData = homepageData[currentLocale as keyof typeof homepageData];
+const pageDescription = `${t("site.hero_name")} - ${homeData.hero_subtitle}. ${homeData.about_description.slice(0, 150)}...`;
+
 const optimizedBackground = await getImage({ src: backgroundImage });
 ---
 
-<Layout title={t("site.hero_name")}>
+<Layout title={t("site.hero_name")} description={pageDescription}>
   <Header />
   <main>
     <div

@@ -1,17 +1,17 @@
 ---
 import { Image } from "astro:assets";
-import aboutImage from "../assets/images/about-side.jpg";
+import aboutImage from "@assets/images/about-side.jpg";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-import homepageData from "../data/homepage.json";
+import homepageData from "@data/homepage.json";
 const content =
   homepageData[(Astro.currentLocale ?? "en") as keyof typeof homepageData];
 
 import { marked } from "marked";
 const about_description = marked.parse(content.about_description);
 
-import { useTranslations } from "../i18n/ui";
-import type { Locale } from "../i18n/ui";
+import { useTranslations } from "@i18n/ui";
+import type { Locale } from "@i18n/ui";
 const locale = Astro.currentLocale as Locale;
 const t = useTranslations(locale);
 ---
@@ -24,16 +24,20 @@ const t = useTranslations(locale);
           <Image
             class="w-full h-full object-cover"
             src={aboutImage}
-            alt="About photo."
+            alt="Veronika Pozniak portrait"
+            format="webp"
+            widths={[320, 640, 960]}
+            sizes="(max-width: 768px) 100vw, 40vw"
+            loading="lazy"
           />
         </div>
       </div>
       <div class="w-full md:w-7/12 md:pl-12">
-        <h1 class="text-brand-primary mb-8 relative inline-block">
+        <h2 class="text-brand-primary mb-8 relative inline-block">
           {content.about_title}
           <span class="absolute -bottom-2 left-0 w-1/3 h-px bg-brand-primary"
           ></span>
-        </h1>
+        </h2>
         <div
           class="font-body-lg text-body-lg text-on-surface-variant space-y-6 max-w-2xl"
         >

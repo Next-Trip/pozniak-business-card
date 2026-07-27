@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { useTranslations } from "../i18n/ui";
+import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 ---
 
@@ -11,9 +11,9 @@ const t = useTranslations(Astro.currentLocale);
   <div
     class="max-w-7xl mx-auto px-6 md:px-16 py-16 flex flex-col md:flex-row justify-between items-center gap-gutter"
   >
-    <h1 class="text-brand-primary text-center md:text-left mb-6 md:mb-0">
+    <p class="font-headline-md text-brand-primary text-center md:text-left mb-6 md:mb-0">
       {t("site.hero_name")}
-    </h1>
+    </p>
     <nav class="flex gap-6 mb-6 md:mb-0">
       <a
         aria-label="Email"

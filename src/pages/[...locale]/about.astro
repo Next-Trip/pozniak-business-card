@@ -23,10 +23,14 @@ export function getStaticPaths() {
 const currentLocale = Astro.params.locale || Astro.currentLocale || defaultLocale;
 const t = useTranslations(currentLocale);
 
-var title = t("site.hero_name") + " - " + t("site.page_title.about");
+import bioData from "@data/bio.json";
+const bio = bioData[currentLocale as keyof typeof bioData];
+const pageDescription = `${bio.title} - ${t("site.hero_name")}. ${bio.content.slice(0, 150)}...`;
+
+const title = t("site.hero_name") + " - " + t("site.page_title.about");
 ---
 
-<Layout title={title}>
+<Layout title={title} description={pageDescription}>
   <Header />
   <Bio />
   <Footer />

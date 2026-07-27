@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import coverImage from "../assets/images/cover.jpg";
-import homepageData from "../data/homepage.json";
+import coverImage from "@assets/images/cover.jpg";
+import homepageData from "@data/homepage.json";
 const content =
   homepageData[(Astro.currentLocale ?? "en") as keyof typeof homepageData];
 
-import { useTranslations } from "../i18n/ui";
+import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 ---
 
@@ -17,7 +17,12 @@ const t = useTranslations(Astro.currentLocale);
     <div class="absolute inset-0 bg-black/20 z-10"></div>
     <Image
       src={coverImage}
-      alt="Cover image."
+      alt={`${t("site.hero_name")} cover photo`}
+      format="webp"
+      widths={[640, 1024, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
       class="object-cover w-full h-full object-center"
     />
   </div>
