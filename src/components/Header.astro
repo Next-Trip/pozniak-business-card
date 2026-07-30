@@ -115,12 +115,10 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 <script>
   function setupMobileMenu() {
     const button = document.getElementById("open-menu-btn");
-    const closebutton = document.getElementById("close-menu-btn");
     const menu = document.getElementById("mobile-nav-overlay");
     const navLinks = document.querySelectorAll(".mobile-nav-link");
 
     button?.addEventListener("click", toggleMenu);
-    closebutton?.addEventListener("click", toggleMenu);
 
     navLinks.forEach((link) => {
       link.addEventListener("click", closeMenu);
@@ -153,6 +151,5 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     }
   }
 
-  document.addEventListener("DOMContentLoaded", setupMobileMenu);
   document.addEventListener("astro:page-load", setupMobileMenu);
 </script>
