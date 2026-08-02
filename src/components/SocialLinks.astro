@@ -1,0 +1,52 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  class?: string;
+  itemClass?: string;
+}
+
+const {
+  class: className = "flex gap-6 mb-6 md:mb-0",
+  itemClass = "text-brand-primary-on-surface hover:text-brand-secondary transition-colors duration-200",
+} = Astro.props;
+
+const socialLinks = [
+  {
+    label: "Email",
+    href: "mailto:vpozniakmusic@gmail.com",
+    icon: "mdi:email-outline",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/vpozniak_music",
+    icon: "mdi:instagram",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61575866916326",
+    icon: "mdi:facebook",
+  },
+  {
+    label: "Youtube",
+    href: "https://youtube.com/@veronikapozniak?si=A26cpsOYInxNovC7",
+    icon: "mdi:youtube",
+  },
+];
+---
+
+<nav class={className}>
+  {
+    socialLinks.map((link) => (
+      <a
+        aria-label={link.label}
+        class={itemClass}
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name={link.icon} width="24" height="24" />
+      </a>
+    ))
+  }
+</nav>

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import LanguageDropdown from "@components/LanguageDropdown.astro";
+import SocialLinks from "@components/SocialLinks.astro";
 
 import { getRelativeLocaleUrl } from "astro:i18n";
 
@@ -36,14 +37,15 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 ---
 
 <div
-  class="mt-(--header-height) fixed inset-0 bg-brand-tertiary/95 z-60 hidden flex-col p-6 transition-opacity duration-300"
+  class="mt-(--header-height) fixed justify-between inset-0 bg-brand-tertiary/95 z-60 flex flex-col p-6 backdrop-blur-md transition-all duration-300 ease-in-out opacity-0 pointer-events-none -translate-y-4"
   id="mobile-nav-overlay"
 >
-  <nav class="flex flex-col space-y-8 mt-12">
+  <nav class="flex flex-col space-y-5 mt-10">
     {
-      navItems.map((item) => (
+      navItems.map((item, index) => (
         <a
-          class="mobile-nav-link font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4"
+          class="mobile-nav-link font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4 opacity-0 translate-y-2"
+          style={`transition-delay: ${index * 60 + 80}ms;`}
           href={item.href}
         >
           {t(item.labelKey)}
@@ -52,11 +54,15 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     }
   </nav>
 
-  <div class="pt-8">
-    <LanguageDropdown
-      class="flex gap-2 items-center font-body-lg uppercase"
-      variant="inline"
-    />
+  <div class="mobile-nav-footer transition-all duration-300 ease-in-out opacity-0 translate-y-2 delay-300">
+    <div class="mb-6">
+      <LanguageDropdown
+        class="flex gap-2 items-center font-body-lg uppercase"
+        variant="inline"
+      />
+    </div>
+
+    <SocialLinks />
   </div>
 </div>
 
@@ -73,7 +79,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     </a>
 
     <button
-      class="md:hidden text-brand-primary cursor-pointer transition-all active:opacity-70"
+      class="md:hidden text-brand-primary cursor-pointer transition-transform active:scale-95 relative w-8 h-8 flex items-center justify-center"
       id="open-menu-btn"
       aria-expanded="false"
       aria-label="Toggle menu"
@@ -82,13 +88,13 @@ const navItems: { labelKey: UiKey; href: string }[] = [
         name="mdi:menu"
         width="32"
         height="32"
-        class="menu-icon-open transition-all duration-200"
+        class="menu-icon-open absolute transition-all duration-300 ease-in-out transform rotate-0 opacity-100 scale-100"
       />
       <Icon
         name="mdi:close"
         width="32"
         height="32"
-        class="menu-icon-close transition-all duration-200 hidden"
+        class="menu-icon-close absolute transition-all duration-300 ease-in-out transform -rotate-90 opacity-0 scale-75"
       />
     </button>
 
@@ -117,6 +123,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     const button = document.getElementById("open-menu-btn");
     const menu = document.getElementById("mobile-nav-overlay");
     const navLinks = document.querySelectorAll(".mobile-nav-link");
+    const navFooter = menu?.querySelector(".mobile-nav-footer");
 
     button?.addEventListener("click", toggleMenu);
 
@@ -131,11 +138,28 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 
       const iconOpen = button?.querySelector(".menu-icon-open");
       const iconClose = button?.querySelector(".menu-icon-close");
-      iconOpen?.classList.toggle("hidden", nextExpanded);
-      iconClose?.classList.toggle("hidden", !nextExpanded);
 
-      menu?.classList.toggle("hidden");
-      menu?.classList.toggle("flex");
+      if (nextExpanded) {
+        // Open
+        iconOpen?.classList.add("rotate-90", "opacity-0", "scale-75");
+        iconOpen?.classList.remove("rotate-0", "opacity-100", "scale-100");
+
+        iconClose?.classList.add("rotate-0", "opacity-100", "scale-100");
+        iconClose?.classList.remove("-rotate-90", "opacity-0", "scale-75");
+
+        menu?.classList.remove("opacity-0", "pointer-events-none", "-translate-y-4");
+        menu?.classList.add("opacity-100", "pointer-events-auto", "translate-y-0");
+
+        navLinks.forEach((link) => {
+          link.classList.remove("opacity-0", "translate-y-2");
+          link.classList.add("opacity-100", "translate-y-0");
+        });
+
+        navFooter?.classList.remove("opacity-0", "translate-y-2");
+        navFooter?.classList.add("opacity-100", "translate-y-0");
+      } else {
+        closeMenu();
+      }
     }
 
     function closeMenu() {
@@ -143,11 +167,23 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 
       const iconOpen = button?.querySelector(".menu-icon-open");
       const iconClose = button?.querySelector(".menu-icon-close");
-      iconOpen?.classList.remove("hidden");
-      iconClose?.classList.add("hidden");
 
-      menu?.classList.add("hidden");
-      menu?.classList.remove("flex");
+      iconOpen?.classList.remove("rotate-90", "opacity-0", "scale-75");
+      iconOpen?.classList.add("rotate-0", "opacity-100", "scale-100");
+
+      iconClose?.classList.remove("rotate-0", "opacity-100", "scale-100");
+      iconClose?.classList.add("-rotate-90", "opacity-0", "scale-75");
+
+      menu?.classList.remove("opacity-100", "pointer-events-auto", "translate-y-0");
+      menu?.classList.add("opacity-0", "pointer-events-none", "-translate-y-4");
+
+      navLinks.forEach((link) => {
+        link.classList.remove("opacity-100", "translate-y-0");
+        link.classList.add("opacity-0", "translate-y-2");
+      });
+
+      navFooter?.classList.remove("opacity-100", "translate-y-0");
+      navFooter?.classList.add("opacity-0", "translate-y-2");
     }
   }
 

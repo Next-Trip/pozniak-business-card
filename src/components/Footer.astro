@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
+import SocialLinks from "@components/SocialLinks.astro";
 import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 ---
@@ -14,44 +14,7 @@ const t = useTranslations(Astro.currentLocale);
     <p class="font-headline-md text-brand-primary text-center md:text-left mb-6 md:mb-0">
       {t("site.hero_name")}
     </p>
-    <nav class="flex gap-6 mb-6 md:mb-0">
-      <a
-        aria-label="Email"
-        class="text-brand-primary-on-surface hover:text-brand-secondary transition-colors duration-200"
-        href="mailto:vpozniakmusic@gmail.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="mdi:email-outline" width="24" height="24" />
-      </a>
-      <a
-        aria-label="Instagram"
-        class="text-brand-primary-on-surface hover:text-brand-secondary transition-colors duration-200"
-        href="https://www.instagram.com/vpozniak_music"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="mdi:instagram" width="24" height="24" />
-      </a>
-      <a
-        aria-label="Facebook"
-        class="text-brand-primary-on-surface hover:text-brand-secondary transition-colors duration-200"
-        href="https://www.facebook.com/profile.php?id=61575866916326"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="mdi:facebook" width="24" height="24" />
-      </a>
-      <a
-        aria-label="Youtube"
-        class="text-brand-primary-on-surface hover:text-brand-secondary transition-colors duration-200"
-        href="https://youtube.com/@veronikapozniak?si=A26cpsOYInxNovC7"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon name="mdi:youtube" width="24" height="24" />
-      </a>
-    </nav>
+    <SocialLinks />
     <div
       class="font-label-sm uppercase text-brand-primary-on-surface text-center md:text-right"
     >
