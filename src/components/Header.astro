@@ -37,10 +37,10 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 ---
 
 <div
-  class="mt-(--header-height) fixed justify-between inset-0 bg-brand-tertiary/95 z-60 flex flex-col p-6 backdrop-blur-md transition-all duration-300 ease-in-out opacity-0 pointer-events-none -translate-y-4"
+  class="fixed top-(--header-height) inset-x-0 bottom-0 max-h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-brand-tertiary/95 z-60 flex flex-col justify-between p-6 backdrop-blur-md transition-all duration-300 ease-in-out opacity-0 pointer-events-none -translate-y-4"
   id="mobile-nav-overlay"
 >
-  <nav class="flex flex-col space-y-5 mt-10">
+  <nav class="flex flex-col space-y-4 sm:space-y-5 mt-4 sm:mt-6">
     {
       navItems.map((item, index) => (
         <a
@@ -54,7 +54,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     }
   </nav>
 
-  <div class="mobile-nav-footer transition-all duration-300 ease-in-out opacity-0 translate-y-2 delay-300">
+  <div class="mobile-nav-footer mt-8 transition-all duration-300 ease-in-out opacity-0 translate-y-2 delay-300">
     <div class="mb-6">
       <LanguageDropdown
         class="flex gap-2 items-center font-body-lg uppercase"
@@ -141,6 +141,8 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 
       if (nextExpanded) {
         // Open
+        document.body.classList.add("overflow-hidden");
+
         iconOpen?.classList.add("rotate-90", "opacity-0", "scale-75");
         iconOpen?.classList.remove("rotate-0", "opacity-100", "scale-100");
 
@@ -163,6 +165,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     }
 
     function closeMenu() {
+      document.body.classList.remove("overflow-hidden");
       button?.setAttribute("aria-expanded", "false");
 
       const iconOpen = button?.querySelector(".menu-icon-open");
