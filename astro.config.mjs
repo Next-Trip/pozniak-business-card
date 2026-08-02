@@ -15,6 +15,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      cssCodeSplit: true,
+      target: "es2022",
+      chunkSizeWarningLimit: 1500,
+    },
   },
 
   fonts: [
