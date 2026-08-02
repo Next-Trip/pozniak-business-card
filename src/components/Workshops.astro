@@ -41,7 +41,7 @@ const sortedWorkshops = [...allWorkshops].sort((a, b) => {
             </div>
             <div class="flex items-center w-full md:w-0 justify-end">
               <a
-                class="text-nowrap inline-flex items-center justify-center px-6 py-3 border border-brand-primary font-label-sm uppercase tracking-widest hover:bg-brand-primary text-brand-primary hover:text-[#F1EDE4] transition-all"
+                class="text-nowrap inline-flex items-center justify-center px-6 py-3 border border-brand-primary font-label-sm uppercase tracking-widest hover:bg-brand-primary text-brand-primary hover:text-brand-tertiary transition-all"
                 href={workshop.data.button_link}
               >
                 {workshop.data.button_text}
@@ -56,7 +56,7 @@ const sortedWorkshops = [...allWorkshops].sort((a, b) => {
         {t("workshops.individual.title")}
       </p>
       <a
-        class="inline-flex items-center justify-center px-8 py-4 bg-brand-primary text-[#F1EDE4] font-label-sm uppercase tracking-widest hover:bg-surface-tint hover:text-brand-primary hover:border-brand-primary transition-colors"
+        class="inline-flex items-center justify-center px-8 py-4 bg-brand-primary text-brand-tertiary font-label-sm uppercase tracking-widest hover:bg-surface-tint hover:text-brand-primary hover:border-brand-primary transition-colors"
         href="#footer"
       >
         {t("workshops.individual.request")}
