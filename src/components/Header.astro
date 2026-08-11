@@ -37,14 +37,14 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 ---
 
 <div
-  class="fixed top-(--header-height) inset-x-0 bottom-0 max-h-[calc(100dvh-var(--header-height))] overflow-y-auto bg-brand-tertiary/95 z-60 flex flex-col justify-between p-6 backdrop-blur-md transition-all duration-300 ease-in-out opacity-0 pointer-events-none -translate-y-4"
+  class="bg-brand-tertiary/95 pointer-events-none fixed inset-x-0 top-(--header-height) bottom-0 z-60 flex max-h-[calc(100dvh-var(--header-height))] -translate-y-4 flex-col justify-between overflow-y-auto p-6 opacity-0 backdrop-blur-md transition-all duration-300 ease-in-out"
   id="mobile-nav-overlay"
 >
-  <nav class="flex flex-col space-y-4 sm:space-y-5 mt-4 sm:mt-6">
+  <nav class="mt-4 flex flex-col space-y-4 sm:mt-6 sm:space-y-5">
     {
       navItems.map((item, index) => (
         <a
-          class="mobile-nav-link font-headline-md text-brand-primary hover:pl-4 transition-all duration-300 ease-in-out border-b border-brand-primary/20 pb-4 opacity-0 translate-y-2"
+          class="mobile-nav-link font-headline-md text-brand-primary border-brand-primary/20 translate-y-2 border-b pb-4 opacity-0 transition-all duration-300 ease-in-out hover:pl-4"
           style={`transition-delay: ${index * 60 + 80}ms;`}
           href={item.href}
         >
@@ -54,10 +54,12 @@ const navItems: { labelKey: UiKey; href: string }[] = [
     }
   </nav>
 
-  <div class="mobile-nav-footer mt-8 transition-all duration-300 ease-in-out opacity-0 translate-y-2 delay-300">
+  <div
+    class="mobile-nav-footer mt-8 translate-y-2 opacity-0 transition-all delay-300 duration-300 ease-in-out"
+  >
     <div class="mb-6">
       <LanguageDropdown
-        class="flex gap-2 items-center font-body-lg uppercase"
+        class="font-body-lg flex items-center gap-2 uppercase"
         variant="inline"
       />
     </div>
@@ -67,19 +69,20 @@ const navItems: { labelKey: UiKey; href: string }[] = [
 </div>
 
 <header
-  class="fixed h-(--header-height) top-0 w-full z-50 backdrop-blur-md bg-brand-tertiary/80 text-brand-primary"
+  class="bg-brand-tertiary/80 text-brand-primary fixed top-0 z-50 h-(--header-height) w-full backdrop-blur-md"
 >
   <div
-    class="flex justify-between items-center px-6 md:pl-16 md:pr-6 py-2 h-20 max-w-7xl mx-auto"
+    class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 py-2 md:pr-6 md:pl-16"
   >
     <a
-      class="font-headline-md uppercase tracking-tighter" style="line-height: 0.9;"
+      class="font-headline-md tracking-tighter uppercase"
+      style="line-height: 0.9;"
       href={getRelativeLocaleUrl(Astro.currentLocale ?? "en", "")}
       >{t("site.hero_name")}
     </a>
 
     <button
-      class="md:hidden text-brand-primary cursor-pointer transition-transform active:scale-95 relative w-8 h-8 flex items-center justify-center"
+      class="text-brand-primary relative flex h-8 w-8 cursor-pointer items-center justify-center transition-transform active:scale-95 md:hidden"
       id="open-menu-btn"
       aria-expanded="false"
       aria-label="Toggle menu"
@@ -88,21 +91,21 @@ const navItems: { labelKey: UiKey; href: string }[] = [
         name="mdi:menu"
         width="32"
         height="32"
-        class="menu-icon-open absolute transition-all duration-300 ease-in-out transform rotate-0 opacity-100 scale-100"
+        class="menu-icon-open absolute scale-100 rotate-0 transform opacity-100 transition-all duration-300 ease-in-out"
       />
       <Icon
         name="mdi:close"
         width="32"
         height="32"
-        class="menu-icon-close absolute transition-all duration-300 ease-in-out transform -rotate-90 opacity-0 scale-75"
+        class="menu-icon-close absolute scale-75 -rotate-90 transform opacity-0 transition-all duration-300 ease-in-out"
       />
     </button>
 
-    <nav class="hidden md:flex space-x-8">
+    <nav class="hidden space-x-8 md:flex">
       {
         navItems.map((item) => (
           <a
-            class="text-body-md uppercase tracking-widest text-brand-primary-on-surface hover:text-brand-primary transition-colors duration-300"
+            class="text-body-md text-brand-primary-on-surface hover:text-brand-primary tracking-widest uppercase transition-colors duration-300"
             href={item.href}
           >
             {t(item.labelKey)}
@@ -111,7 +114,7 @@ const navItems: { labelKey: UiKey; href: string }[] = [
       }
     </nav>
 
-    <div class="hidden md:flex space-x-2">
+    <div class="hidden space-x-2 md:flex">
       <LanguageDropdown />
     </div>
   </div>
@@ -149,8 +152,16 @@ const navItems: { labelKey: UiKey; href: string }[] = [
         iconClose?.classList.add("rotate-0", "opacity-100", "scale-100");
         iconClose?.classList.remove("-rotate-90", "opacity-0", "scale-75");
 
-        menu?.classList.remove("opacity-0", "pointer-events-none", "-translate-y-4");
-        menu?.classList.add("opacity-100", "pointer-events-auto", "translate-y-0");
+        menu?.classList.remove(
+          "opacity-0",
+          "pointer-events-none",
+          "-translate-y-4",
+        );
+        menu?.classList.add(
+          "opacity-100",
+          "pointer-events-auto",
+          "translate-y-0",
+        );
 
         navLinks.forEach((link) => {
           link.classList.remove("opacity-0", "translate-y-2");
@@ -177,7 +188,11 @@ const navItems: { labelKey: UiKey; href: string }[] = [
       iconClose?.classList.remove("rotate-0", "opacity-100", "scale-100");
       iconClose?.classList.add("-rotate-90", "opacity-0", "scale-75");
 
-      menu?.classList.remove("opacity-100", "pointer-events-auto", "translate-y-0");
+      menu?.classList.remove(
+        "opacity-100",
+        "pointer-events-auto",
+        "translate-y-0",
+      );
       menu?.classList.add("opacity-0", "pointer-events-none", "-translate-y-4");
 
       navLinks.forEach((link) => {

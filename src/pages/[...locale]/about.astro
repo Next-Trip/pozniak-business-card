@@ -14,13 +14,12 @@ export function getStaticPaths() {
         { params: { locale: l.code } },
       ];
     }
-    return [
-      { params: { locale: l.code } },
-    ];
+    return [{ params: { locale: l.code } }];
   });
 }
 
-const currentLocale = Astro.params.locale || Astro.currentLocale || defaultLocale;
+const currentLocale =
+  Astro.params.locale || Astro.currentLocale || defaultLocale;
 const t = useTranslations(currentLocale);
 
 import bioData from "@data/bio.json";

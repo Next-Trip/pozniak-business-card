@@ -52,13 +52,13 @@ const localeCodes = locales.map((l) => l.code);
       data-default-locale={defaultLocale}
     >
       <button
-        class="p-3 uppercase rounded-sm cursor-pointer flex items-center gap-2"
+        class="flex cursor-pointer items-center gap-2 rounded-sm p-3 uppercase"
         aria-label="Select Language"
       >
         {Astro.currentLocale}
         <span class="arrow-down" />
       </button>
-      <ul class="lang-menu font-body-sm shadow-md bg-brand-tertiary rounded-sm list-none">
+      <ul class="lang-menu font-body-sm bg-brand-tertiary list-none rounded-sm shadow-md">
         {locales
           .filter((locale) => locale.code !== Astro.currentLocale)
           .map((locale) => (

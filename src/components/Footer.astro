@@ -5,18 +5,20 @@ const t = useTranslations(Astro.currentLocale);
 ---
 
 <footer
-  class="relative z-10 w-full border-t border-brand-primary/10 bg-brand-tertiary dark:bg-brand-tertiary"
+  class="border-brand-primary/10 bg-brand-tertiary dark:bg-brand-tertiary relative z-10 w-full border-t"
   id="footer"
 >
   <div
-    class="max-w-7xl mx-auto px-6 md:px-16 py-16 flex flex-col md:flex-row justify-between items-center gap-gutter"
+    class="gap-gutter mx-auto flex max-w-7xl flex-col items-center justify-between px-6 py-16 md:flex-row md:px-16"
   >
-    <p class="font-headline-md text-brand-primary text-center md:text-left mb-6 md:mb-0">
+    <p
+      class="font-headline-md text-brand-primary mb-6 text-center md:mb-0 md:text-left"
+    >
       {t("site.hero_name")}
     </p>
     <SocialLinks />
     <div
-      class="font-label-sm uppercase text-brand-primary-on-surface text-center md:text-right"
+      class="font-label-sm text-brand-primary-on-surface text-center uppercase md:text-right"
     >
       © 2026 Veronika Pozniak. ALL RIGHTS RESERVED.
     </div>

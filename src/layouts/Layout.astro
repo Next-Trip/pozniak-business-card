@@ -27,20 +27,9 @@ const relativePath = Astro.url.pathname
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href={`${baseUrl}/favicon.svg`}
-    />
-    <link
-      rel="icon"
-      href={`${baseUrl}/favicon.ico`}
-      sizes="any"
-    />
-    <link
-      rel="apple-touch-icon"
-      href={`${baseUrl}/apple-touch-icon.png`}
-    />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
+    <link rel="icon" href={`${baseUrl}/favicon.ico`} sizes="any" />
+    <link rel="apple-touch-icon" href={`${baseUrl}/apple-touch-icon.png`} />
 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -48,13 +37,15 @@ const relativePath = Astro.url.pathname
 
     <!-- Canonical & i18n alternate links -->
     <link rel="canonical" href={canonicalURL} />
-    {locales.map((l) => (
-      <link
-        rel="alternate"
-        hreflang={l.code}
-        href={getAbsoluteLocaleUrl(l.code, relativePath)}
-      />
-    ))}
+    {
+      locales.map((l) => (
+        <link
+          rel="alternate"
+          hreflang={l.code}
+          href={getAbsoluteLocaleUrl(l.code, relativePath)}
+        />
+      ))
+    }
     <link
       rel="alternate"
       hreflang="x-default"
