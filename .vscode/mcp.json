@@ -1,0 +1,26 @@
+{
+  "servers": {
+    "astroDocs": {
+      "type": "http",
+      "url": "https://mcp.docs.astro.build/mcp"
+    },
+    "tailwindcss": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "tailwindcss-mcp-server"],
+      "env": {
+        "NODE_OPTIONS": "--import data:text/javascript,console.log=console.error;"
+      }
+    },
+    "puppeteer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "typescript": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "typescript-mcp-server"]
+    }
+  }
+}
