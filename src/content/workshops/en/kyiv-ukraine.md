@@ -1,6 +1,6 @@
 ---
 position: 1
-title: Folk Singing Workshop · 8 hoursKyiv, Ukraine
+title: Folk Singing Workshop · 8 hours
 start_date: 2026-10-09T09:00:00.000+02:00
 end_date: 2026-10-09T16:30:00.000+02:00
 button_text: "Voice in Motion – Body in Song: From Folk Song to Movement and
