@@ -1,8 +1,18 @@
 ---
 position: 1
-title: Event 1
-date: 2026-07-09T15:40:00.000+03:00
-description: "**Kyiv**, Ukraine"
-button_text: "Button text"
-button_link: "Button link"
+title: Folk Singing Workshop · 8 hours
+date: 2026-10-09T09:00:00.000+02:00
+button_text: "Voice in Motion – Body in Song: From Folk Song to Movement and
+  Dance · 8 hours"
+button_link: https://zivapedagogika.eu/kurzy-new/39-hlas-v-pohybu-telo-v-pisni-cesta-od-lidove-pisne-k-pohybu-a-tanci-8h/
+description: "**An experiential music workshop exploring the connection between
+  folk song, rhythm, voice, and movement.** Drawing on theatre anthropology and
+  ethnographic approaches to traditional singing and musical practices, we will
+  explore folk songs, rhythms, and forms of communal music-making from different
+  cultures. Through singing, breathwork, rhythm, movement, and improvisation, we
+  will discover possibilities for authentic expression, listening, and
+  communication within a group, as well as the relationship between voice, body,
+  and space. The workshop is open to educators, artists, facilitators, and
+  anyone interested in developing their voice, sense of rhythm, and freedom of
+  expression through folk music."
 ---
