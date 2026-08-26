@@ -10,7 +10,7 @@ import { useTranslations } from "@i18n/ui";
 const t = useTranslations(Astro.currentLocale);
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/images/*.{jpeg,jpg,png,gif}",
+  "/src/assets/images/*.{jpeg,jpg,png,gif,JPEG,JPG,PNG,GIF}",
 );
 
 function youTubeGetID(url: string) {
