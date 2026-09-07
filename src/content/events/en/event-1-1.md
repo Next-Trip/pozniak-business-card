@@ -1,5 +1,5 @@
 ---
-position: 1
+position: 2
 title: Folk Singing Workshop · 8 hours
 date: 2026-10-09T09:00:00.000+02:00
 button_text: "Voice in Motion – Body in Song: From Folk Song to Movement and
