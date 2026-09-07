@@ -1,5 +1,5 @@
 ---
-position: 1
+position: 2
 title: Celodenní workshop lidového zpěvu
 date: 2026-09-09T09:00:00.000+02:00
 button_text: "Hlas v pohybu – tělo v písni: cesta od lidové písně k pohybu a tanci 8h"
