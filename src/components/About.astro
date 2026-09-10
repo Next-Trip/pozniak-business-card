@@ -45,7 +45,7 @@ const t = useTranslations(locale);
         </div>
         <div class="mt-12 flex justify-end gap-6">
           <a
-            class="border-brand-primary font-label-sm hover:bg-brand-primary text-brand-primary inline-flex border px-6 py-3 tracking-widest uppercase transition-all hover:text-[#F1EDE4]"
+            class="border-brand-primary font-label-sm hover:bg-brand-primary text-brand-primary hover:text-brand-tertiary inline-flex border px-6 py-3 tracking-widest uppercase transition-all"
             href={getRelativeLocaleUrl(Astro.currentLocale ?? "en", "about")}
           >
             <span>{t("about.cta")}</span>

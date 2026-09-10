@@ -27,8 +27,8 @@ const ui = {
 
     // Workshops
     "workshops.title": "Workshops",
-    "workshops.individual.title": "Looking for a personalized approach?",
-    "workshops.individual.request": "Request Individual Masterclass",
+    "workshops.individual.title": "Looking for an individual approach?",
+    "workshops.individual.request": "Request Private Lesson",
 
     // Gallery
     "gallery.title": "Gallery",
@@ -59,7 +59,7 @@ const ui = {
 
     // Workshops
     "workshops.title": "Майстер-класи",
-    "workshops.individual.title": "Шукаєте персоналізований підхід?",
+    "workshops.individual.title": "Шукаєте індивідуальний підхід?",
     "workshops.individual.request": "Замовити індивідуальний урок",
 
     // Gallery
@@ -116,4 +116,12 @@ export function useTranslations(locale: string | undefined) {
   return (key: UiKey) => {
     return ui[validLocale][key] || ui[defaultLocale][key];
   };
+}
+
+export function formatDate(date: Date | string): string {
+  const d = typeof date === "string" ? new Date(date) : date;
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+  return `${day}.${month}.${year}`;
 }

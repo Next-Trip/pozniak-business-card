@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 
-import { useTranslations, defaultLocale } from "@i18n/ui";
+import { useTranslations, defaultLocale, formatDate } from "@i18n/ui";
 const currentLocale = Astro.currentLocale ?? defaultLocale;
 const t = useTranslations(currentLocale);
 
@@ -31,7 +31,7 @@ const sortedEvents = [...allEvents].sort((a, b) => {
           <div class="border-brand-primary/20 hover:border-brand-primary flex flex-col items-start justify-between gap-6 border-b pb-8 transition-colors md:flex-row md:items-center">
             <div>
               <div class="font-label-sm text-brand-secondary mb-2 tracking-widest uppercase">
-                {event.data.date.toLocaleDateString()}
+                {formatDate(event.data.date)}
               </div>
               <h3 class="text-brand-primary">{event.data.title}</h3>
               <article

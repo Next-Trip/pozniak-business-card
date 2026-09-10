@@ -1,5 +1,5 @@
 ---
-import { useTranslations, defaultLocale } from "@i18n/ui";
+import { useTranslations, defaultLocale, formatDate } from "@i18n/ui";
 const currentLocale = Astro.currentLocale ?? defaultLocale;
 const t = useTranslations(currentLocale);
 
@@ -31,8 +31,8 @@ const sortedWorkshops = [...allWorkshops].sort((a, b) => {
             <div>
               <h3 class="mb-2">{workshop.data.title}</h3>
               <div class="font-label-sm text-brand-secondary mb-2 tracking-widest uppercase">
-                {workshop.data.start_date.toLocaleDateString()} -{" "}
-                {workshop.data.end_date.toLocaleDateString()}
+                {formatDate(workshop.data.start_date)} -{" "}
+                {formatDate(workshop.data.end_date)}
               </div>
               <article
                 class="prose"
