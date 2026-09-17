@@ -5,14 +5,17 @@ import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
-  site: "https://Next-Trip.github.io",
-  base: "/pozniak-business-card",
+  site: "https://veronikapozniak.com",
+
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "hover",
   },
+
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -21,6 +24,7 @@ export default defineConfig({
       chunkSizeWarningLimit: 1500,
     },
   },
+
   session: false,
 
   fonts: [
@@ -63,4 +67,6 @@ export default defineConfig({
     locales: ["uk", "en", "cs"],
     defaultLocale: "en",
   },
+
+  adapter: cloudflare(),
 });
