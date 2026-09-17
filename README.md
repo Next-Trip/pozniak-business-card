@@ -2,7 +2,7 @@
 
 A modern, multilingual personal portfolio and business card website for **Veronika Pozniak** — singer, performer, and vocal educator. Built with **Astro 7**, **Tailwind CSS 4**, and integrated with **Decap CMS** for effortless content management.
 
-🌐 **Live Website**: [https://Next-Trip.github.io/pozniak-business-card](https://Next-Trip.github.io/pozniak-business-card)
+🌐 **Live Website**: [https://veronikapozniak.com](https://veronikapozniak.com)
 
 ---
 
