@@ -37,8 +37,13 @@ const ogImageURL = new URL(socialImage, Astro.site ?? Astro.url);
     <link rel="apple-touch-icon" href={`${baseUrl}/apple-touch-icon.png`} />
 
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Veronika Pozniak" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+
+    <!-- Sitemap discovery -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Canonical & i18n alternate links -->
     <link rel="canonical" href={canonicalURL} />
@@ -58,15 +63,49 @@ const ogImageURL = new URL(socialImage, Astro.site ?? Astro.url);
     />
 
     <!-- Open Graph & Social Media Tags -->
+    <meta property="og:site_name" content="Veronika Pozniak" />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content={currentLocale === "uk" ? "uk_UA" : currentLocale === "cs" ? "cs_CZ" : "en_US"} />
+    {
+      locales
+        .filter((l) => l.code !== currentLocale)
+        .map((l) => (
+          <meta
+            property="og:locale:alternate"
+            content={l.code === "uk" ? "uk_UA" : l.code === "cs" ? "cs_CZ" : "en_US"}
+          />
+        ))
+    }
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Veronika Pozniak",
+        alternateName: ["Вероніка Позняк"],
+        description:
+          description ||
+          "Official website of Veronika Pozniak, singer, performer, and vocal educator.",
+        url: canonicalURL.href,
+        image: ogImageURL.href,
+        sameAs: [
+          "https://www.instagram.com/vpozniak_music",
+          "https://www.facebook.com/profile.php?id=61575866916326",
+          "https://youtube.com/@veronikapozniak?si=A26cpsOYInxNovC7",
+        ],
+        jobTitle: "Singer, Performer, Vocal Educator",
+      })}
+    />
 
     <Font cssVariable="--font-eb-garamond" preload />
     <Font cssVariable="--font-inter" preload />

@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 
 import cloudflare from "@astrojs/cloudflare";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,6 +61,9 @@ export default defineConfig({
           "download",
         ],
       },
+    }),
+    sitemap({
+      filter: (page) => !page.includes("/admin"),
     }),
   ],
 
