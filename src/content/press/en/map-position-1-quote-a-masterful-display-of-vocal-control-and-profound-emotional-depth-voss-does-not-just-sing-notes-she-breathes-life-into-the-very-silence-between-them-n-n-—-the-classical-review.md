@@ -11,11 +11,11 @@ quote: >-
   pianist’s chair, accompanying her.***
 
 
-  ## *\*\*But above all of that, I value something even rarer: Veronika knows what she wants, what is and is not right for her; she knows that whatever she may sing will always leave its imprint on her face, in her expression, and in her name. She does not merely concern herself with repertoire; she takes care of her character.*\*\*
+  ## ***\*\*But above all of that, I value something even rarer: Veronika knows what she wants, what is and is not right for her; she knows that whatever she may sing will always leave its imprint on her face, in her expression, and in her name. She does not merely concern herself with repertoire; she takes care of her character.*\*\***
 
 
-  ### \*\*\*\*
+  ### **\*\*\*\***
 
 
-  **— Přemysl Rut, srpen 2026**
+  ###### **— Přemysl Rut, srpen 2026**
 ---
